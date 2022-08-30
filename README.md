@@ -5,7 +5,7 @@
 
 # Reproducible workflows using the Pyleoclim package
 
-This repository contains three reproducible workflows as Jupyter Notebook using the [Pyleoclim software package](https://pyleoclim-util.readthedocs.io/en/master/) to serve as fully executable companions to the Pyleoclim mansucript.
+This repository contains three reproducible workflows as Jupyter Notebook using the [Pyleoclim software package](https://pyleoclim-util.readthedocs.io/en/master/) to serve as fully executable companions to the Pyleoclim [manuscript](https://www.essoar.org/doi/abs/10.1002/essoar.10511883.1), currently in review at Paleoceanography & PaleoClimatology.
 
 The repository contains three folders, each representing a study using Pyleoclim:
 * Orbital Cycles contains a workflow describing spectral and wavelet analysis of a marine record convering the past 5 million years/
