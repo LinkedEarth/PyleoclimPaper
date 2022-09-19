@@ -20,6 +20,12 @@ The notebooks are fully executable through MyBinder (click on the badge at the t
 
 The package can (but do not necessarily have to) directly work with data in the Linked Paleo Data ([LiPD](https://lipd.net)) format. The advantage of working with that format is that the code contains automated data transformation, making working with paleoclimate data easier and faster.
 
+## Requirements
+
+v0.3 of the notebooks require v0.9.1 of Pyleoclim and associated requirements detailed in the `environment.yml` file. A built container is available on [Quay.io](https://quay.io/repository/linkedearth/pyleoclim?tab=tags):
+
+`docker pull quay.io/linkedearth/pyleoclim:5b1148342325`
+
 ## License
 
 All notebooks herein are provided under an [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) license.
