@@ -22,7 +22,7 @@ The package can (but do not necessarily have to) directly work with data in the 
 
 ## Requirements
 
-v0.3 of the notebooks require v0.9.1 of Pyleoclim and associated requirements detailed in the `environment.yml` file. A built container is available on [Quay.io](https://quay.io/repository/linkedearth/pyleoclim?tab=tags):
+v0.4 of the notebooks require v0.9.1 of Pyleoclim and associated requirements detailed in the `environment.yml` file. A built container is available on [Quay.io](https://quay.io/repository/linkedearth/pyleoclim?tab=tags):
 
 `docker pull quay.io/linkedearth/pyleoclim:5b1148342325`
 
