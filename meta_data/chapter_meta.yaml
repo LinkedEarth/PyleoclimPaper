@@ -1,0 +1,46 @@
+shortname: Pyleoclim science
+type: Paleobook
+thumbnail: thumbnail.png
+parts:
+  - caption: Science Bits
+    chapters:
+      - shortname: Chasing cyclicities
+        filename: Chasing_orbital_cyclicities
+        thumbnail: wavelet.png
+        tags:
+          domains:
+            - spectral analysis
+            - wavelet analysis
+            - cross-wavelet analysis
+            - insolation
+            - paleoceanography
+          packages:
+            - xarray
+            - pyleoclim
+            - pylipd
+            - climlab
+      - shortname: Model-Data Confrontation
+        filename: Model_data_confrontation
+        thumbnail: spectralslope.png
+        tags:
+          domains:
+            - model output
+            - spectral analysis
+            - model-data comparison
+            - paleoclimate
+          packages:
+            - xarray
+            - pyleoclim
+      - shortname: Correlations at Sea
+        filename: CrystalCorrelations
+        thumbnail: corrhist.png
+        tags:
+          domains:
+            - paleoclimate
+            - correlation
+            - age uncertainty
+          packages:
+            - xarray
+            - pyleoclim
+            - cartopy
+            - pylipd

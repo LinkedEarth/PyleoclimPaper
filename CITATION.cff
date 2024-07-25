@@ -1,4 +1,4 @@
-cff-version: 0.4.0
+cff-version: 1.0.0
 message: "If you use this software, please cite it as below."
 authors:
   - family-names: "Khider"
@@ -11,7 +11,7 @@ authors:
     given-names: "Feng"
     orcid: "https://orcid.org/0000-0002-9969-2953"
 title: "Example scientific workflows using Pyleoclim"
-version: v0.4.0
+version: v1.0.0
 doi: 10.5281/zenodo.6633665
-date-released: 2022-09-19
+date-released: 2024-07-24
 url: "https://github.com/LinkedEarth/PyleoclimPaper"
