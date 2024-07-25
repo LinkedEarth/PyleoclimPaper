@@ -1,0 +1,1973 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chasing cyclicities &#8212; Reproducible workflows using the Pyleoclim package</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'OrbitalCycles/Chasing_orbital_cyclicities';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model-Data Confrontation in the Spectral Domain" href="../MDConfrontation/Model_data_confrontation.html" />
+    <link rel="prev" title="Reproducible workflows using the Pyleoclim package" href="../README.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Reproducible workflows using the Pyleoclim package - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Reproducible workflows using the Pyleoclim package - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Reproducible workflows using the Pyleoclim package
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Scientific Workflows</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chasing cyclicities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MDConfrontation/Model_data_confrontation.html">Model-Data Confrontation in the Spectral Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CrystalCorrelations/CrystalCorrelations.html">Correlations at Sea</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/LinkedEarth/PyleoclimPaper/main?urlpath=tree/OrbitalCycles/Chasing_orbital_cyclicities.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/LinkedEarth/PyleoclimPaper" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/LinkedEarth/PyleoclimPaper/issues/new?title=Issue%20on%20page%20%2FOrbitalCycles/Chasing_orbital_cyclicities.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/OrbitalCycles/Chasing_orbital_cyclicities.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chasing cyclicities</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-exploration">Data Exploration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectral-and-wavelet-analysis">Spectral and Wavelet Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#benthic-record">Benthic record</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Data exploration</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-benthic-lr04-stack">Comparison with Benthic LR04 stack</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#planktonic-record">Planktonic record</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Data exploration</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-age-uncertainty"><a name="age"> Effect of Age Uncertainty </a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-to-insolation">Relationship to Insolation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><img alt="" src="https://github.com/LinkedEarth/Logos/raw/master/PYLEOCLIM_logo_HORZ-01.png" /></p>
+<section class="tex2jax_ignore mathjax_ignore" id="chasing-cyclicities">
+<h1>Chasing cyclicities<a class="headerlink" href="#chasing-cyclicities" title="Link to this heading">#</a></h1>
+<p>In this notebook, we demonstrate the use of the spectral and wavelet analysis features of <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/index.html">Pyleoclim</a> using a sea surface temperature reconstruction from Site ODP846 in the Eastern Equatorial Pacific. The goal is to explore the periodicities present in this 5 million years record and explore any coherency between insolation and the sea surface temperature record.</p>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h2>
+<p>The record is described in:</p>
+<ul class="simple">
+<li><p>Mix, A. C., J. Le, and N. J. Shackleton (1995), Benthic foraminiferal stable isotope stratigraphy from Site 846: 0–1.8 Ma, Proc. Ocean Drill. Program Sci. Results, 138, 839–847.</p></li>
+<li><p>Shackleton, N. J., Hall, M. A., &amp; Pate, D. (1995). Pliocene stable isotope stratigraphy of ODP Site 846. Proc. Ocean Drill. Program Sci. Results, 138, 337-356.</p></li>
+<li><p>Lawrence, K. T., Liu, Z. H., &amp; Herbert, T. D. (2006). Evolution of the eastern tropical Pacific through Plio-Pleistocne glaciation. Science, 312(5770), 79-83.</p></li>
+</ul>
+<p>The data were aligned to the Benthic Stack of <a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2004PA001071">Lisiecki &amp; Raymo (2005)</a> (LR04) using the HMM-Match algorithm developed by <a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014PA002713">Lin et al. (2014)</a> as used by <a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1002/2016PA003057">Khider et al, 2017</a>. The latter is a probabilistic method that generates an ensemble of 1000 possible age models compatible with the chronostratigraphic constraints.</p>
+<p>The dataset is stored in the Linked Paleo Data Format (LiPD, <a class="reference external" href="https://lipd.net">McKay and Emile-Geay (2016)</a>) and available from the same GitHub repository as the notebook.</p>
+</section>
+<section id="data-exploration">
+<h2>Data Exploration<a class="headerlink" href="#data-exploration" title="Link to this heading">#</a></h2>
+<p>Let’s import this file into Pyleoclim and make a informational dashboard about the dataset. The cell below will import the various packages needed throughout the notebook, including Pyleoclim.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyleoclim</span> <span class="k">as</span> <span class="nn">pyleo</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pylipd</span> <span class="kn">import</span> <span class="n">LiPD</span>
+
+<span class="c1"># For insolation curves, let&#39;s use climlab</span>
+<span class="kn">from</span> <span class="nn">climlab.solar.orbital</span> <span class="kn">import</span> <span class="n">OrbitalTable</span>
+<span class="kn">from</span> <span class="nn">climlab.solar.insolation</span> <span class="kn">import</span> <span class="n">daily_insolation</span>
+
+<span class="n">pyleo</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;web&#39;</span><span class="p">)</span> <span class="c1">#set the figure style</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the <a class="reference external" href="https://pylipd.readthedocs.io/en/latest/"><code class="docutils literal notranslate"><span class="pre">pyLiPD</span></code> package</a> to open and manipulate datasets published in the LiPD format.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="n">LiPD</span><span class="p">()</span>
+<span class="n">D</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data/ODP846.Lawrence.2006.lpd&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading 1 LiPD files
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████| 1/1 [00:00&lt;00:00,  1.84it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded..
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next step is to isolate the time series of interest (in this case, the temperature record) and create a <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#geoseries-pyleoclim-geoseries"><code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> object</a> in Pyleoclim. <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> is itself a child of the <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#series-pyleoclim-series"><code class="docutils literal notranslate"><span class="pre">Series</span></code> object</a>, which carries most of the functionalities of Pyleoclim. This means that all the methods applicable to <code class="docutils literal notranslate"><span class="pre">Series</span></code> are also applicable to <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> (with some additional ones enabled by the additional metadata extracted from a LiPD file).</p>
+<p>To extract individual timeseries using <code class="docutils literal notranslate"><span class="pre">PyLiPD</span></code>, you can use the method <a class="reference external" href="https://pylipd.readthedocs.io/en/latest/api.html#pylipd.lipd.LiPD.get_timeseries_essentials"><code class="docutils literal notranslate"><span class="pre">get_timeseries_essential</span></code></a>, which will extract the time series information and associated metadata into a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html"><code class="docutils literal notranslate"><span class="pre">Pandas</span> <span class="pre">DataFrame</span></code></a>. Each row will correspond to a timeseries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">get_timeseries_essentials</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataSetName</th>
+      <th>archiveType</th>
+      <th>geo_meanLat</th>
+      <th>geo_meanLon</th>
+      <th>geo_meanElev</th>
+      <th>paleoData_variableName</th>
+      <th>paleoData_values</th>
+      <th>paleoData_units</th>
+      <th>paleoData_proxy</th>
+      <th>paleoData_proxyGeneral</th>
+      <th>time_variableName</th>
+      <th>time_values</th>
+      <th>time_units</th>
+      <th>depth_variableName</th>
+      <th>depth_values</th>
+      <th>depth_units</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>Marine sediment</td>
+      <td>-3.1</td>
+      <td>-90.8</td>
+      <td>-3296.0</td>
+      <td>ukprime37</td>
+      <td>[0.821, 0.824, 0.828, 0.787, 0.777, 0.767, 0.7...</td>
+      <td>unitless</td>
+      <td>None</td>
+      <td>None</td>
+      <td>age</td>
+      <td>[5.228, 8.947, 11.966, 14.427, 16.502, 18.41, ...</td>
+      <td>kyr BP</td>
+      <td>depth</td>
+      <td>[0.16, 0.26, 0.36, 0.46, 0.56, 0.66, 0.76, 0.8...</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>Marine sediment</td>
+      <td>-3.1</td>
+      <td>-90.8</td>
+      <td>-3296.0</td>
+      <td>c37 total</td>
+      <td>[2.37, 2.1, 1.87, 2.74, 3.75, 7.62, 7.86, 7.73...</td>
+      <td>nmol/kg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>age</td>
+      <td>[5.228, 8.947, 11.966, 14.427, 16.502, 18.41, ...</td>
+      <td>kyr BP</td>
+      <td>depth</td>
+      <td>[0.16, 0.26, 0.36, 0.46, 0.56, 0.66, 0.76, 0.8...</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>Marine sediment</td>
+      <td>-3.1</td>
+      <td>-90.8</td>
+      <td>-3296.0</td>
+      <td>u. peregrina d13c</td>
+      <td>[nan, nan, nan, nan, nan, nan, nan, nan, nan, ...</td>
+      <td>per mil PDB</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>depth cr</td>
+      <td>[0.12, 0.23, 0.33, 0.33, 0.43, 0.53, 0.63, 0.7...</td>
+      <td>rmcd</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>Marine sediment</td>
+      <td>-3.1</td>
+      <td>-90.8</td>
+      <td>-3296.0</td>
+      <td>u. peregrina d13c</td>
+      <td>[nan, nan, nan, nan, nan, nan, nan, nan, nan, ...</td>
+      <td>per mil PDB</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>depth comp</td>
+      <td>[12.0, 23.0, 33.0, 33.0, 43.0, 53.0, 63.0, 73....</td>
+      <td>mcd</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>Marine sediment</td>
+      <td>-3.1</td>
+      <td>-90.8</td>
+      <td>-3296.0</td>
+      <td>u. peregrina d13c</td>
+      <td>[nan, nan, nan, nan, nan, nan, nan, nan, nan, ...</td>
+      <td>per mil PDB</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>depth</td>
+      <td>[0.12, 0.23, 0.33, 0.33, 0.43, 0.53, 0.63, 0.7...</td>
+      <td>m</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s have a look at the variables present in the file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;paleoData_variableName&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;ukprime37&#39;, &#39;c37 total&#39;, &#39;u. peregrina d13c&#39;, &#39;temp prahl&#39;,
+       &#39;event&#39;, &#39;c. wuellerstorfi d13c&#39;, &#39;section&#39;,
+       &#39;c. wuellerstorfi d18o&#39;, &#39;site/hole&#39;, &#39;sample label&#39;,
+       &#39;temp muller&#39;, &#39;u. peregrina d18o&#39;, &#39;interval&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s pick the sea surface temperature record obtained from the <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/S0016703798000970">Muller et al. (1998)</a> calibration and create a <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;paleoData_variableName&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;temp muller&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#select the proper row and re-index it to zero so we can select it easily</span>
+
+<span class="n">ts</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;time_values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;paleoData_values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geo_meanLat&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                     <span class="n">lon</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geo_meanLon&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">elevation</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geo_meanElev&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_name</span><span class="o">=</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="n">time_unit</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;time_units&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                     <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Sea Surface Temperature&#39;</span><span class="p">,</span> <span class="n">value_unit</span> <span class="o">=</span> <span class="s1">&#39;$^\circ$C&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;dataSetName&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> 
+                     <span class="n">archiveType</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;archiveType&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">control_archiveType</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;depth_values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> 
+                     <span class="n">depth_name</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;depth_variableName&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">depth_unit</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;depth_units&#39;</span><span class="p">],</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s have a look at the parameters passed to the <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> object upon its creation:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">time</span></code>: The values for the time axis. <em>(Mandatory field)</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: The values for the variable of interest, in this case sea surface temperature. <em>(Mandatory field)</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lat</span></code>: The latitude the archive was recovered from. <em>(Mandatory field)</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lon</span></code>: The longitude the archive was recovered from. <em>(Mandatory field)</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">elevation</span></code>: The depth (or altitude) the archive was recovered from.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time_name</span></code>: THe name of the time axis. By convention, we use ‘Age’ for retrograde time and ‘Year’ for prograde.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time_unit</span></code>: The units associated with the time axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value_name</span></code>: The name of the variable of interest</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value_unit</span></code>: The units for the variable of interest</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span></code>: The label for the timeseries. This is particularly useful if you plan to plot multiple timeseries to generate the legend automatically.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">archiveType</span></code>: The type of geological archive the measurements can be made on.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">control_archiveType</span></code>: If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">Pyleoclim</span></code> will attempt to match your string to a <a class="reference external" href="https://lipdverse.org/vocabulary/archivetype/">standardized vocabulary</a> of archiveType. In this notebook, we set it to <code class="docutils literal notranslate"><span class="pre">True</span></code> to enbale default plottinf style as the LiPD file was created before standardization. Note that this step is not necessary and is mostly useful for mapping.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">depth</span></code>: the values for the depth in the archive where the measurements were made</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">depth_name</span></code>: The name for the depth in the archive</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">depth_unit</span></code>: The units of depth</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: Here, we set it to False to prevent Pyleoclim from giving out too many warnings. If this is you first time using the package or if you are not familiar with all the parameters associated with the <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> object, we recommend that you turn <code class="docutils literal notranslate"><span class="pre">verbose</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ul>
+<p>Let’s create a dashboard, a functionality specific to <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code>, which will give us a plot of the time series, the location of the record and a spectrum along with some specific metadata.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span><span class="o">.</span><span class="n">dashboard</span><span class="p">(</span><span class="n">plt_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;marker&#39;</span><span class="p">:</span><span class="kc">None</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 200/200 [00:52&lt;00:00,
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1100x800 with 4 Axes&gt;,
+ {&#39;ts&#39;: &lt;Axes: xlabel=&#39;Age [kyr BP]&#39;, ylabel=&#39;Sea Surface Temperature [$^\\circ$C]&#39;&gt;,
+  &#39;dts&#39;: &lt;Axes: xlabel=&#39;Counts&#39;&gt;,
+  &#39;map&#39;: {&#39;map&#39;: &lt;GeoAxes: xlabel=&#39;lon&#39;, ylabel=&#39;lat&#39;&gt;},
+  &#39;spec&#39;: &lt;Axes: xlabel=&#39;Period [kyr]&#39;, ylabel=&#39;PSD&#39;&gt;})
+</pre></div>
+</div>
+<img alt="../_images/2d58cc7759c4aab087ef70577a6e2dda408af21d4bba84a1520932e6d626d65f.png" src="../_images/2d58cc7759c4aab087ef70577a6e2dda408af21d4bba84a1520932e6d626d65f.png" />
+</div>
+</div>
+<p>Sea surface temperatures have decreased throughout the last 5M years, with cycles superimposed on the long-term cooling trend. The periodogram indicates significant periodicities at orbital time scales, which merits further investigation.</p>
+<p>Since the age model was obtained by alignment of the benthic <span class="math notranslate nohighlight">\(\delta^{18}O\)</span> to the LR04 curve, let’s also load it into a <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> object for comparison. The data is stored in the chron tables, which we indicate by using the <code class="docutils literal notranslate"><span class="pre">mode</span></code> parameter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">get_timeseries_essentials</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;chron&#39;</span><span class="p">)</span>
+<span class="n">df_c</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataSetName</th>
+      <th>archiveType</th>
+      <th>geo_meanLat</th>
+      <th>geo_meanLon</th>
+      <th>geo_meanElev</th>
+      <th>chronData_variableName</th>
+      <th>chronData_values</th>
+      <th>chronData_units</th>
+      <th>time_variableName</th>
+      <th>time_values</th>
+      <th>time_units</th>
+      <th>depth_variableName</th>
+      <th>depth_values</th>
+      <th>depth_units</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>Marine sediment</td>
+      <td>-3.1</td>
+      <td>-90.8</td>
+      <td>-3296.0</td>
+      <td>age</td>
+      <td>[3.645, 7.99, 11.18, 13.803, 15.886, 17.93, 19...</td>
+      <td>ky BP</td>
+      <td>age</td>
+      <td>[3.645, 7.99, 11.18, 13.803, 15.886, 17.93, 19...</td>
+      <td>ky BP</td>
+      <td>depth</td>
+      <td>[0.12, 0.23, 0.33, 0.43, 0.53, 0.63, 0.73, 0.8...</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>Marine sediment</td>
+      <td>-3.1</td>
+      <td>-90.8</td>
+      <td>-3296.0</td>
+      <td>depth</td>
+      <td>[0.12, 0.23, 0.33, 0.43, 0.53, 0.63, 0.73, 0.8...</td>
+      <td>m</td>
+      <td>age</td>
+      <td>[3.645, 7.99, 11.18, 13.803, 15.886, 17.93, 19...</td>
+      <td>ky BP</td>
+      <td>depth</td>
+      <td>[0.12, 0.23, 0.33, 0.43, 0.53, 0.63, 0.73, 0.8...</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>Marine sediment</td>
+      <td>-3.1</td>
+      <td>-90.8</td>
+      <td>-3296.0</td>
+      <td>d18o</td>
+      <td>[3.38, 3.46, 3.765, 4.14, 4.47, 4.99, 4.99, 4....</td>
+      <td>permil</td>
+      <td>age</td>
+      <td>[3.645, 7.99, 11.18, 13.803, 15.886, 17.93, 19...</td>
+      <td>ky BP</td>
+      <td>depth</td>
+      <td>[0.12, 0.23, 0.33, 0.43, 0.53, 0.63, 0.73, 0.8...</td>
+      <td>m</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s grab the benthic <span class="math notranslate nohighlight">\(\delta^{18}O\)</span> data and store it into another <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="n">df_c</span><span class="p">[</span><span class="n">df_c</span><span class="p">[</span><span class="s1">&#39;chronData_variableName&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;d18o&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#select the proper row and re-index it to zero so we can select it easily</span>
+
+<span class="n">ts_benthic</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;time_values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;chronData_values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geo_meanLat&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                     <span class="n">lon</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geo_meanLon&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">elevation</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geo_meanElev&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_name</span><span class="o">=</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="n">time_unit</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;time_units&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                     <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Benthic $\delta^</span><span class="si">{18}</span><span class="s1">O$&#39;</span><span class="p">,</span> <span class="n">value_unit</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="se">\u2030</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;dataSetName&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> 
+                     <span class="n">archiveType</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;archiveType&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">control_archiveType</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;depth_values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> 
+                     <span class="n">depth_name</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;depth_variableName&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">depth_unit</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;depth_units&#39;</span><span class="p">],</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And do a simple plot of the benthic record:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ts_benthic</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span> <span class="c1">#flip the axis by convention</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7736a5fda72ed093b0b256f528d667bf1013c86e8868fb6e05894ef65dfaa463.png" src="../_images/7736a5fda72ed093b0b256f528d667bf1013c86e8868fb6e05894ef65dfaa463.png" />
+</div>
+</div>
+<p>The benthic <span class="math notranslate nohighlight">\(\delta^{18}O\)</span> record displays:</p>
+<ul class="simple">
+<li><p>a long-term cooling trend (<span class="math notranslate nohighlight">\(\delta^{18}O\)</span> gets more positive over time) characteristic of late Neogene and Quaternary and increasing ice volume</p></li>
+<li><p>shorter term shifts that represent the ice ages and that are used for the alignment of this benthic record with the benthic stack (LR04).</p></li>
+</ul>
+<p>Speaking of the LR04 record, let’s load the benthic stack into a <code class="docutils literal notranslate"><span class="pre">Series</span></code> for comparison. The data is saved in csv format that can be loaded into a <code class="docutils literal notranslate"><span class="pre">Pandas</span> <span class="pre">DataFrame</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./data/LR04.csv&#39;</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Time (ka)</th>
+      <th>Benthic d18O (per mil)</th>
+      <th>Standard error (per mil)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>3.23</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>3.23</td>
+      <td>0.04</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.0</td>
+      <td>3.18</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.0</td>
+      <td>3.29</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.0</td>
+      <td>3.30</td>
+      <td>0.03</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And let’s create a <code class="docutils literal notranslate"><span class="pre">Series</span></code> from this <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr04</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">value</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;Benthic $\delta^</span><span class="si">{18}</span><span class="s1">O$&#39;</span><span class="p">,</span><span class="n">value_unit</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\u2030</span><span class="s1">&#39;</span><span class="p">,</span>
+                   <span class="n">time_name</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="n">time_unit</span><span class="o">=</span><span class="s1">&#39;ky BP&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;LR04&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time axis values sorted in ascending order
+</pre></div>
+</div>
+</div>
+</div>
+<p>And plot it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">lr04</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span> <span class="c1">#invert the y-axis as per standard usage</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/22931eb12ae175e848f0a46b3bfb2ae35596dbd47b93ba9f4e7ee704c1bfc592.png" src="../_images/22931eb12ae175e848f0a46b3bfb2ae35596dbd47b93ba9f4e7ee704c1bfc592.png" />
+</div>
+</div>
+<p>Let’s plot the series together on a <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/core/ui.html#pyleoclim.core.ui.MultipleSeries.stackplot">stackplot</a>. This functionality is enabled through Pyleoclim’s <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/core/ui.html#multipleseries-pyleoclim-multipleseries"><code class="docutils literal notranslate"><span class="pre">MultipleSeries</span></code> object</a>, which can be created from a list of <code class="docutils literal notranslate"><span class="pre">Series</span></code> (and by extension <code class="docutils literal notranslate"><span class="pre">LipdSeries</span></code>) objects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ms</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">MultipleSeries</span><span class="p">([</span><span class="n">ts</span><span class="p">,</span><span class="n">ts_benthic</span><span class="p">,</span><span class="n">lr04</span><span class="p">])</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ms</span><span class="o">.</span><span class="n">stackplot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ODP846-SST&#39;</span><span class="p">,</span><span class="s1">&#39;ODP846-Benthic&#39;</span><span class="p">,</span><span class="s1">&#39;LR04&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4bfed6e10a5945c44224988cdf24884b97d7816e1ca90d86f152d63dc525b816.png" src="../_images/4bfed6e10a5945c44224988cdf24884b97d7816e1ca90d86f152d63dc525b816.png" />
+</div>
+</div>
+</section>
+<section id="spectral-and-wavelet-analysis">
+<h2>Spectral and Wavelet Analysis<a class="headerlink" href="#spectral-and-wavelet-analysis" title="Link to this heading">#</a></h2>
+<section id="benthic-record">
+<h3>Benthic record<a class="headerlink" href="#benthic-record" title="Link to this heading">#</a></h3>
+<p>Let’s quickly examine the spectral content of the benthic record. Because the age model was obtained by aligning the record to the LR04 stack, which is orbitally tuned, we would expect to recover the orbital periodicities in the record.</p>
+<p>Pyleoclim is capable of running both spectral and wavelet analysis, which give slightly different information about the timeseries. Both allow to examine the frequency content of a time series but wavelet analysis offers the added opportunity to examine the sationarity of that signal over time. Pyleoclim provides easy access to several methods, allowing you to explore the trade-offs of each method as well as the robustness of the signals to the statistical method.</p>
+<p>For spectral analysis, Pyleoclim offers a <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/core/ui.html#pyleoclim.core.ui.Series.spectral">variety of methods</a> (e.g., MTM, Welch, Lomb-Scargle…). Some are more appropriate to evenly-spaced datasets (e.g., Lomb-Scargle) than others. Let’s first plot the time difference between adjacent samples for the record.</p>
+<section id="id1">
+<h4>Data exploration<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ts_benthic</span><span class="o">.</span><span class="n">time</span><span class="p">)</span> <span class="c1"># calculate the difference between adjacent time</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span><span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Age increments (ka)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Age increments (ka)&#39;)
+</pre></div>
+</div>
+<img alt="../_images/9caa3b2ee3c6128586d2daf245aa696ed158ac58bd681287751f7d14b8f97258.png" src="../_images/9caa3b2ee3c6128586d2daf245aa696ed158ac58bd681287751f7d14b8f97258.png" />
+</div>
+</div>
+<p>The data is unevenly-spaced and therefore, traditional methods such as MTM, may not be appropriate for this dataset. Let’s start with a Lomb-Scargle periodogram (<a class="reference external" href="https://link.springer.com/article/10.1007/BF00648343">Lomb (1976)</a>, Scargle (<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/1982ApJ...263..835S/abstract">1982</a>,<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/1989ApJ...343..874S/abstract">1989</a>)).</p>
+<p>We should also decide on any pre-processing steps. In this case, the long-term trend is confounding and should be removed prior to analysis. Pyleoclim offers several <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/core/ui.html#pyleoclim.core.ui.Series.detrend">detrending methods</a>:</p>
+<ul class="simple">
+<li><p>linear</p></li>
+<li><p>constant (the mean is removed from the series)</p></li>
+<li><p>Filtering through a Savitzky-Golay filter and removal of the low-frequency component.</p></li>
+<li><p>Empirical mode decomposition (removal of the last mode, which corresponds to the lowest-frequency signal).</p></li>
+</ul>
+<p>Of these, the last two seem to be the most appropriate for the data since the long-term cooling is not linear. Let’s run both and compare the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts_benthic_emd</span> <span class="o">=</span> <span class="n">ts_benthic</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span> <span class="c1">#detrend using the EMD method, which is the default in Pyleoclim, and standardize</span>
+<span class="n">ts_benthic_emd</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Detrended, EMD method&#39;</span> <span class="c1">#label for plot</span>
+<span class="n">ts_benthic_sv</span> <span class="o">=</span> <span class="n">ts_benthic</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;savitzky-golay&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span> <span class="c1">#detrend using the Savitzky-Golay method and standardize</span>
+<span class="n">ts_benthic_sv</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Detrended, Savitzky-Golay method&#39;</span> <span class="c1">#label for plot</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ts_benthic_emd</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span> <span class="c1">#plot. </span>
+<span class="n">ts_benthic_sv</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/aeac07d5802ac73e4208c19dfe3a15c071233e871da603b6ba016a408073ea1e.png" src="../_images/aeac07d5802ac73e4208c19dfe3a15c071233e871da603b6ba016a408073ea1e.png" />
+</div>
+</div>
+<p>The two detrending methods return very similar results, so we proceed with the default EMD method.</p>
+</section>
+<section id="analysis">
+<h4>Analysis<a class="headerlink" href="#analysis" title="Link to this heading">#</a></h4>
+<p>The Lomb-Scargle periodogram can then be obtained with the following line of code. We use method chaining to create a workflow that first detrend the time series using the default EMD method, standardize, run spectral analysis (note that here we ask for the Lomb Scargle method using a frequency method called Lomg Scargle after the REDFIT alogrithm of <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0098300401000449">Schulz and Mudelsee (2002)</a> and 5 overlapping segments), and perform significance testing using an AR1 ensemble.</p>
+<p>The Lomb-Scargle method implemented in Pyleoclim makes use of the Welch’s overlapped segment averaging (WOSA) technique (<a class="reference external" href="https://ieeexplore.ieee.org/document/1161901">Welch, 1967</a>, <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0098300497000873">Schulz and Stattegger (1997)</a>). The parameter <code class="docutils literal notranslate"><span class="pre">n50</span></code> allows to set the number of segments with a 50% overlap. Feel free to change the settings and explore the effect of this parameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_benthic</span><span class="o">=</span><span class="n">ts_benthic</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;lomb_scargle&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;lomb_scargle&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n50&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [04:44&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_benthic</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1">#limit to 500k period</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [ky]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/f455adeb11270a16112a2a2312f900986d8339f646fa9192c763cbc19cfb0cc0.png" src="../_images/f455adeb11270a16112a2a2312f900986d8339f646fa9192c763cbc19cfb0cc0.png" />
+</div>
+</div>
+<p>Unsurprisingly, the record displays periodicities around 40 kyr and 100 kyr. Why is this result not surprising? Remember that the age model was obtained by aligning the benthic record to the LR04 stack, which is itself tuned to those very Milankovitch periodicities. If anything, this proved that the Lomb-Scargle method can recover periodicities embedded in the record by construction.</p>
+<p>Another way to estimate the spectral density is to use the Weighted Wavelet Z-Transform (<a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/utils/spectral/wwz_psd.html#utils-wwzpsd">WWZ</a>) from <a class="reference external" href="https://adsabs.harvard.edu/full/1996AJ....112.1709F">Foster (1996)</a> as implemented by <a class="reference external" href="https://www.pnas.org/content/116/18/8728.short">Zhu et al. (2019)</a> for Pyleoclim, which is also appropriate for unevenly-spaced data. Note that this method is wavelet-based; we, therefore, compute the power spectral density (PSD) from the scalogram.</p>
+<p>This opens two possibilities: (1) Run the ‘wwz’ method through <code class="docutils literal notranslate"><span class="pre">pyleoclim.Series.spectral</span></code> and/or (2) Run the ‘wwz’ method for wavelet analysis and compute the PSD from the stored scalograms. Which one should be used depends on the goal at hand.</p>
+<p>To see why, let us have a look at the parameters attached to the <code class="docutils literal notranslate"><span class="pre">wwz</span></code> method as called through the <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/utils/wavelet/wwz.html#utils-wwz">wavelet()</a> and <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/utils/spectral/wwz_psd.html#utils-wwzpsd">spectral()</a> methods. One of the parameters is the decay constant <code class="docutils literal notranslate"><span class="pre">c</span></code>, which balances the time resolution and frequency resolution of the wavelet analysis. The smaller this constant is, the sharper the peaks. For spectral analysis, where the purpose is to find peaks, a smaller value for <code class="docutils literal notranslate"><span class="pre">c</span></code> is needed compared to wavelet analysis, where time-frequency localization is of the essence (<a class="reference external" href="https://adsabs.harvard.edu/full/1996AJ....112.1709F">Foster (1996)</a>, <a class="reference external" href="https://www.pnas.org/doi/10.1073/pnas.0701020104">Wu et al., 2007</a>). Therefore, if the purpose is to identify spectral peaks (periodicites) in the record, it may be useful to run the <code class="docutils literal notranslate"><span class="pre">wwz</span></code> method through <code class="docutils literal notranslate"><span class="pre">spectral()</span></code> (method 1). If the purpose is to obtain the spectral slope only, then method 2 is more computationally efficient.</p>
+<p>Let’s compare what happens with the two methods. Let’s first compute the PSD from the <code class="docutils literal notranslate"><span class="pre">spectral()</span></code> mehod. <strong>This calculation may take a few hours to run.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_benthic_wwz</span> <span class="o">=</span> <span class="n">ts_benthic</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+Performing spectral analysis on individual series: 100%|█| 1000/1000 [58:45&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_benthic_wwz</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1">#limit to 500k period</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [ky]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/be88a9f8b46abf5af479f586243d9d83707218298e34fa389bdbf2b78622bf9e.png" src="../_images/be88a9f8b46abf5af479f586243d9d83707218298e34fa389bdbf2b78622bf9e.png" />
+</div>
+</div>
+<p>The PSD obtained from WWZ method agrees remarkably well with the PSD obtained using Lomb-Scargle. We will compare the two methods on the same plot after we obtain the PSD using the scalograms from <code class="docutils literal notranslate"><span class="pre">wavelet()</span></code>. To do so, you need to set the <code class="docutils literal notranslate"><span class="pre">export_scal</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p><strong>Note that this computation takes some time and the resulting file is ~500 Mb</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_benthic_wwz</span><span class="o">=</span><span class="n">ts_benthic</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">wavelet</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">export_scal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing wavelet analysis on individual series: 100%|█| 1000/1000 [53:52&lt;00:00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_benthic_wwz</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x800 with 2 Axes&gt;,
+ &lt;Axes: title={&#39;center&#39;: &#39;ODP846.Lawrence.2006 scalogram (WWZ) with 95% threshold&#39;}, xlabel=&#39;Age [ky BP]&#39;, ylabel=&#39;Scale [kyrs]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/93b408c624c855e1e30413ae6ea91f5bb41c8ba007b73af0714e51cacccd5d91.png" src="../_images/93b408c624c855e1e30413ae6ea91f5bb41c8ba007b73af0714e51cacccd5d91.png" />
+</div>
+</div>
+<p>The scalogram reveals the non-stationary character of the periodicities seen in spectral analysis and offers additional information related to the well-known mid-Pleistocene transition from a “41 kyr world” to a “100 kyr world” somewhere around 0.8 Ma (<a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/2000RG000091">Paillard (2001)</a>). There is also a drop in power after 3 Ma, which could be a climate signal or due to core resolution/alignment. The LR04 stack is noisier since fewer records are part of the composite over that time period. In other words, the noise to signal ratio may prevent any climate-related cyclicities from being identified.</p>
+<p>Next, let’s compute the PSD from the scalogram and plot it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_benthic_wwz_fromscal</span> <span class="o">=</span> <span class="n">ts_benthic</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">scalogram</span><span class="o">=</span><span class="n">scal_benthic_wwz</span><span class="p">)</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">],</span> <span class="n">scalogram</span><span class="o">=</span><span class="n">scal_benthic_wwz</span><span class="p">)</span>
+<span class="n">psd_benthic_wwz_fromscal</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [00:05&lt;00:0
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [ky]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/f5f9ab3cd4b8198b18ef56ba5b6e428b9a0c8675aeb6810ac683b1a34d954ce7.png" src="../_images/f5f9ab3cd4b8198b18ef56ba5b6e428b9a0c8675aeb6810ac683b1a34d954ce7.png" />
+</div>
+</div>
+<p>Note the effect of <code class="docutils literal notranslate"><span class="pre">c</span></code> on the periodogram: the lower resolution creates a smoother PSD, with peaks less sharply defined.</p>
+<p>Let’s compare the Lomb-Scargle and WWZ method. To this end, we recompute the Lomb-Scargle periodogram using the default frequency vector:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_benthic_default_freq</span><span class="o">=</span><span class="n">ts_benthic</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;lomb_scargle&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n50&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [04:39&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_benthic_default_freq</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1">#limit to 500k period</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [ky]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/9021ebc11f596e13fcef3a939dd3c819f5e864a71fdd545599d1d23c7dc82747.png" src="../_images/9021ebc11f596e13fcef3a939dd3c819f5e864a71fdd545599d1d23c7dc82747.png" />
+</div>
+</div>
+<p>We can plot the two spectra obtained from the wwz and Lomb-Scargle methods on the same figure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">psd_benthic_default_freq</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">signif_clr</span><span class="o">=</span><span class="s1">&#39;slateblue&#39;</span><span class="p">)</span> <span class="c1">#limit to 500k period and change the color of the significance line. </span>
+<span class="n">psd_benthic_wwz</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">signif_clr</span><span class="o">=</span><span class="s1">&#39;sandybrown&#39;</span><span class="p">,</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1">#change the color of the significance line. </span>
+<span class="n">current_handles</span><span class="p">,</span> <span class="n">current_labels</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span> <span class="c1">#get the information about the legend</span>
+<span class="n">current_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Lomb-Scargle&#39;</span> <span class="c1"># change label of the first entry to describe the method rather than the record name</span>
+<span class="n">current_labels</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;WWZ&#39;</span> <span class="c1"># change label of the second to last entry to describe the method rather than the record name</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">current_handles</span><span class="p">,</span><span class="n">current_labels</span><span class="p">)</span> <span class="c1">##replace legend entries</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1"># set the current limits  to the 500k periodicity</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(500.0, 5.0)
+</pre></div>
+</div>
+<img alt="../_images/4817b94d353491b15d45bb788250bfd20fc65370ec1798c81476d6d03f9c11ff.png" src="../_images/4817b94d353491b15d45bb788250bfd20fc65370ec1798c81476d6d03f9c11ff.png" />
+</div>
+</div>
+<p>This plot highlights the remakable agreement between the two methods.</p>
+<p>Pyleoclim can also create a <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/core/ui.html#pyleoclim.core.ui.Series.summary_plot">summary plot</a> of the wavelet and spectral analysis:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ts_benthic</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">psd</span><span class="o">=</span><span class="n">psd_benthic_wwz</span><span class="p">,</span><span class="n">scalogram</span><span class="o">=</span><span class="n">scal_benthic_wwz</span><span class="p">,</span> <span class="n">value_label</span> <span class="o">=</span> <span class="s1">&#39;$\delta^</span><span class="si">{18}</span><span class="s1">O$&#39;</span><span class="p">,</span>
+                                <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;ODP846 Benthic $\delta^</span><span class="si">{18}</span><span class="s1">O$&#39;</span><span class="p">,</span>
+                                <span class="n">ts_plot_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;legend&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span> <span class="c1">#change the label so it fits on the plot</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span> <span class="c1">#invert the y-axis for the timeseries plot (print ax to figure out the &#39;ts&#39; label)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9a98c58903f2a1bf0d83618594fc9d92a9f28d8aad4634893704da249628b577.png" src="../_images/9a98c58903f2a1bf0d83618594fc9d92a9f28d8aad4634893704da249628b577.png" />
+</div>
+</div>
+</section>
+<section id="comparison-with-benthic-lr04-stack">
+<h4>Comparison with Benthic LR04 stack<a class="headerlink" href="#comparison-with-benthic-lr04-stack" title="Link to this heading">#</a></h4>
+<p>The loss of power before 3 million years is intriguing and merits further investigation. There are two possible (and non mutually exclusive) explanations: (1) The orbital signal has a weaker impact on climate, (2) the noise to signal ratio is preventing detection. The LR04 stack is composed of 57 globally distributed records. However, most of the high-resolution records cover the last 2 million years (Lisiecki and Raymo, 2005), making the alignment between 3-5 Ma more difficult.</p>
+<p>Let’s compute the scalogram for LR04:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_LR04_wwz</span><span class="o">=</span><span class="n">lr04</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">wavelet</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing wavelet analysis on individual series: 100%|█| 1000/1000 [1:00:34&lt;00:
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_LR04_wwz</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x800 with 2 Axes&gt;,
+ &lt;Axes: title={&#39;center&#39;: &#39;LR04 scalogram (WWZ) with 95% threshold&#39;}, xlabel=&#39;Age [ky BP]&#39;, ylabel=&#39;Scale [kyrs]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/f82270747521626eac2d632f3f75cf2eb08406ca63b93045a654916f763aa8aa.png" src="../_images/f82270747521626eac2d632f3f75cf2eb08406ca63b93045a654916f763aa8aa.png" />
+</div>
+</div>
+<p>The stack displays strong periodicitied in the 100 kyr and 40 kyr band up to about 3 Ma. Despite being oribitally tuned, the method cannot accurately capture the 40 kyr periodicities from the early part of the record. We would, therefore, not expect to see them in the ODP846 record either.</p>
+</section>
+</section>
+<section id="planktonic-record">
+<h3>Planktonic record<a class="headerlink" href="#planktonic-record" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h4>Data exploration<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>Let’s repeat our process with the planktonic data. In this case, the variations in SST were not aligned to the LR04 stack and are therefore not orbitally tuned. However, the data is still unevenly-spaced:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span><span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Age increments (ka)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Age increments (ka)&#39;)
+</pre></div>
+</div>
+<img alt="../_images/fc8fe95b2e171e9f16c041f3378b319f33a335374ffbd973a41b7e94570c0bda.png" src="../_images/fc8fe95b2e171e9f16c041f3378b319f33a335374ffbd973a41b7e94570c0bda.png" />
+</div>
+</div>
+<p>Again, let’s look at detrending methods for pre-processing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts_emd</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span>
+<span class="n">ts_emd</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Detrended through EMD method&#39;</span>
+<span class="n">ts_sv</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;savitzky-golay&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span>
+<span class="n">ts_sv</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Detrended through Savitzky-Golay method&#39;</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ts_emd</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">ts_sv</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Age [kyr BP]&#39;, ylabel=&#39;Sea Surface Temperature [$^\\circ$C]&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/cc99314e85541716e20c84c94638996dbe2d850678379607fdc5cfd8a63100fc.png" src="../_images/cc99314e85541716e20c84c94638996dbe2d850678379607fdc5cfd8a63100fc.png" />
+</div>
+</div>
+<p>Once again, the two are equivalent and we will proceed with the default EMD method.</p>
+</section>
+<section id="id3">
+<h4>Analysis<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<p>Let’s obtain the Lomb-Scargle periodogram:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;lomb_scargle&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;lomb_scargle&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n50&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [05:00&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [kyr]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/d40b16ba62e9f0465eeda6a0e655d0f0d564e7e9289fd02df6bc98e63d20b79a.png" src="../_images/d40b16ba62e9f0465eeda6a0e655d0f0d564e7e9289fd02df6bc98e63d20b79a.png" />
+</div>
+</div>
+<p>The record displays significant periodicities around and 100 kyr and singificant peaks in the precessional and obliquity band (23-40 kyr).</p>
+<p>Let’s examine the robustness of these findings with the WWZ method. As we have done with the benthic record, let’s first compute the PSD from the <code class="docutils literal notranslate"><span class="pre">spectral</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_wwz</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [1:17:54&lt;00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_wwz</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1">#limit to 500k period</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [kyr]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/6ffc36812a3fc7f8d8d72f41dddfcf22f8ae7c7dea92ab54e21ab70f11f18ba7.png" src="../_images/6ffc36812a3fc7f8d8d72f41dddfcf22f8ae7c7dea92ab54e21ab70f11f18ba7.png" />
+</div>
+</div>
+<p>And let’s compute the scalogram to look at the intermittence of the periodicities:</p>
+<p><strong>Note that this calculation takes some time to complete.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_wwz</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">wavelet</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">export_scal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing wavelet analysis on individual series: 100%|█| 1000/1000 [1:07:58&lt;00:
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_wwz</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x800 with 2 Axes&gt;,
+ &lt;Axes: title={&#39;center&#39;: &#39;ODP846.Lawrence.2006 scalogram (WWZ) with 95% threshold&#39;}, xlabel=&#39;Age [kyr BP]&#39;, ylabel=&#39;Scale [kyrs]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/a09d5e7387dc1ca193d96386d1d67d8c0df94ffb07bca6371410a1de84ea1552.png" src="../_images/a09d5e7387dc1ca193d96386d1d67d8c0df94ffb07bca6371410a1de84ea1552.png" />
+</div>
+</div>
+<p>The scalogram displays significant and intermittent periodicities in the 100 kyr band between 0 and 3 Ma (beyond the mid-Pleistocene transmission). There is also significant power between 20-40 kyr throughout the last 3 Ma.</p>
+<p>Let’s compute the PSD from the scalogram:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_wwz_fromscal</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">scalogram</span><span class="o">=</span><span class="n">scal_wwz</span><span class="p">)</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">scalogram</span><span class="o">=</span><span class="n">scal_wwz</span><span class="p">)</span>
+<span class="n">psd_wwz_fromscal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [00:00&lt;00:0
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [kyr]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/cb2e34e66251fd8c6a323a7b13a31932bac36425f60754152d990ceb4dde364f.png" src="../_images/cb2e34e66251fd8c6a323a7b13a31932bac36425f60754152d990ceb4dde364f.png" />
+</div>
+</div>
+<p>Notice the effect of the <code class="docutils literal notranslate"><span class="pre">c</span></code> parameter. The PSD is thoroughly smoothed out when obtained from the scalograms directly.</p>
+<p>Let’s recompute the PSD with the Lomb-Scargle method and the same frequency vector as we used for the wwz method for direct comparison:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_default_freq</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;lomb_scargle&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n50&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [04:57&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_default_freq</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [kyr]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/df8976120d2c227e48ba325df163929ffdf8f80a496d79d784e96cb28a85fc6c.png" src="../_images/df8976120d2c227e48ba325df163929ffdf8f80a496d79d784e96cb28a85fc6c.png" />
+</div>
+</div>
+<p>The PSD obtained with the WWZ method shows the significant periodicites at 100 kyr, 40 kyr and 23 kyr. Let’s plot the two PSDs on the same figure for comparison.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">psd_default_freq</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">signif_clr</span><span class="o">=</span><span class="s1">&#39;slateblue&#39;</span><span class="p">)</span> <span class="c1">#limit to 500k period and change the color of the significance line. </span>
+<span class="n">psd_wwz</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">signif_clr</span><span class="o">=</span><span class="s1">&#39;sandybrown&#39;</span><span class="p">,</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1">#change the color of the significance line. </span>
+<span class="n">current_handles</span><span class="p">,</span> <span class="n">current_labels</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span> <span class="c1">#get the information about the legend</span>
+<span class="n">current_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Lomb-Scargle&#39;</span> <span class="c1"># change label of the first entry to describe the method rather than the record name</span>
+<span class="n">current_labels</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;WWZ&#39;</span> <span class="c1"># change label of the second to last entry to describe the method rather than the record name</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">current_handles</span><span class="p">,</span><span class="n">current_labels</span><span class="p">)</span> <span class="c1">##replace legend entries</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">500</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1"># set the current limits  to the 500k periodicity</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(500.0, 5.0)
+</pre></div>
+</div>
+<img alt="../_images/bba39532f8f4e26439bc5324e1cfd208ca7b35118d50f6d947579f9a6c8292b7.png" src="../_images/bba39532f8f4e26439bc5324e1cfd208ca7b35118d50f6d947579f9a6c8292b7.png" />
+</div>
+</div>
+<p>Again, the two methods agree remarkably well.</p>
+<section id="effect-of-age-uncertainty">
+<h5><a name='age'> Effect of Age Uncertainty </a><a class="headerlink" href="#effect-of-age-uncertainty" title="Link to this heading">#</a></h5>
+<p>Age model uncertainty can results in shifted age-depth relationship that may affect the spectrum. If age models are present in the LiPD file, Pyleoclim can help you identify spurious peaks. You can use <code class="docutils literal notranslate"><span class="pre">PyLiPD</span></code> to grab the age models from the <code class="docutils literal notranslate"><span class="pre">ensembleTable</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ensemble_df</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">get_ensemble_tables</span><span class="p">()</span>
+<span class="n">ensemble_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>datasetName</th>
+      <th>ensembleTable</th>
+      <th>ensembleVariableName</th>
+      <th>ensembleVariableValues</th>
+      <th>ensembleVariableUnits</th>
+      <th>ensembleDepthName</th>
+      <th>ensembleDepthValues</th>
+      <th>ensembleDepthUnits</th>
+      <th>notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ODP846.Lawrence.2006</td>
+      <td>http://linked.earth/lipd/chron0model0ensemble0</td>
+      <td>age</td>
+      <td>[[4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0,...</td>
+      <td>kyr BP</td>
+      <td>depth</td>
+      <td>[0.12, 0.23, 0.33, 0.43, 0.53, 0.63, 0.73, 0.8...</td>
+      <td>m</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>You can use the function <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#pyleoclim.core.ensemblegeoseries.EnsembleGeoSeries.from_AgeEnsembleArray"><code class="docutils literal notranslate"><span class="pre">from_AgeEnsembleArray</span></code></a> to create an <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#ensemblegeoseries-pyleoclim-ensemblegeoseries"><code class="docutils literal notranslate"><span class="pre">EnsembleGeoSeries</span></code></a> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sst_ens</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">EnsembleSeries</span><span class="o">.</span><span class="n">from_AgeEnsembleArray</span><span class="p">(</span><span class="n">series</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="n">age_array</span><span class="o">=</span> <span class="n">ensemble_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;ensembleVariableValues&#39;</span><span class="p">],</span>
+                                                     <span class="n">age_depth</span> <span class="o">=</span> <span class="n">ensemble_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;ensembleDepthValues&#39;</span><span class="p">],</span> 
+                                                     <span class="n">value_depth</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">EnsembleGeoSeries</span></code> is a child of <code class="docutils literal notranslate"><span class="pre">EnsembleSeries</span></code>, therefore the methods of this class apply to the child. We can plot using the following code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">sst_ens</span><span class="o">.</span><span class="n">plot_traces</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/213c0baa0cbe29792304cb2a96b1b502654dcee9d527486d73889237567c1318.png" src="../_images/213c0baa0cbe29792304cb2a96b1b502654dcee9d527486d73889237567c1318.png" />
+</div>
+</div>
+<p>The envelope plot is often more practical to look at ensembles. However, make sure that the plot only encompasses the common period represented in every member. Don’t worry, Pyleoclim has a function for this called <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/master/core/ui.html#pyleoclim.core.ui.MultipleSeries.common_time"><code class="docutils literal notranslate"><span class="pre">common_time</span></code></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sst_ens</span><span class="o">.</span><span class="n">common_time</span><span class="p">()</span><span class="o">.</span><span class="n">plot_envelope</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Age [kyr BP]&#39;, ylabel=&#39;Sea Surface Temperature [$^\\circ$C]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/336834d3c9c55a0f453069ffc371b02e31bc90101f5c145457e3ff2668dc3c5a.png" src="../_images/336834d3c9c55a0f453069ffc371b02e31bc90101f5c145457e3ff2668dc3c5a.png" />
+</div>
+</div>
+<p>Let’s run spectral analysis. For speed, we will only use the Lomb-Scargle method. For consistency, we will also work with the same frequency vector as for the original analysis, which we can directly obtain from the object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">freq</span> <span class="o">=</span> <span class="n">psd</span><span class="o">.</span><span class="n">frequency</span> <span class="c1">#obtain the frequency vector from the PSD object created after spectral analysis. </span>
+<span class="n">psd_ens</span><span class="o">=</span><span class="n">sst_ens</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;freq&#39;</span><span class="p">:</span><span class="n">freq</span><span class="p">,</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [04:50&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now plot the resulting ensemble PSD:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">psd_ens</span><span class="o">.</span><span class="n">plot_envelope</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">150</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">10000</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/56f390b759f3320e50888620a813cb5f21fe12dbbdb90360fdbe2b04dadd3392.png" src="../_images/56f390b759f3320e50888620a813cb5f21fe12dbbdb90360fdbe2b04dadd3392.png" />
+</div>
+</div>
+<p>Most of the low periodicity noise observed originally is smoothed out in the median ensemble, which is not surprising. The record retains orbital periodicity (40-100kyr) that is expressed in most of the age models.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="relationship-to-insolation">
+<h2>Relationship to Insolation<a class="headerlink" href="#relationship-to-insolation" title="Link to this heading">#</a></h2>
+<p>Let’s examine the relation between the orbital periodicities observed in the SST record
+Given that the signal only exhibits singificant power in the 0-3MA, let’s slice the record</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts_slice</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">slice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">3000</span><span class="p">])</span>
+<span class="n">ts_slice</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Age [kyr BP]&#39;, ylabel=&#39;Sea Surface Temperature [$^\\circ$C]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/2ffd28498433eae280fded6e4e6c3d4a82d10c09c9833487e4aac12cf596a368.png" src="../_images/2ffd28498433eae280fded6e4e6c3d4a82d10c09c9833487e4aac12cf596a368.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts_slice</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Age [kyr BP]&#39;, ylabel=&#39;Sea Surface Temperature [$^\\circ$C]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/f9cdd031ed0986e3c1310ea46379b56dad5073746f08e491e3081cf5e4e3f62a.png" src="../_images/f9cdd031ed0986e3c1310ea46379b56dad5073746f08e491e3081cf5e4e3f62a.png" />
+</div>
+</div>
+<p><strong>Hypothesis 1</strong>: The periodic signals are driven by insolation at 5S, where the record is located.</p>
+<p>Let us use ClimLab to obtain the insolation at 5S.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># array with specified kyears</span>
+<span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3001</span><span class="p">)</span>
+
+<span class="c1"># subset of orbital parameters for specified time</span>
+<span class="n">orb</span> <span class="o">=</span> <span class="n">OrbitalTable</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">kyear</span><span class="o">=</span><span class="n">years</span><span class="p">)</span>
+
+<span class="c1"># insolation values for past 3 Myears at 5S at summer solstice (day 172)</span>
+<span class="n">S5</span> <span class="o">=</span> <span class="n">daily_insolation</span><span class="p">(</span><span class="n">lat</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">172</span><span class="p">,</span> <span class="n">orb</span><span class="o">=</span><span class="n">orb</span><span class="p">)</span>
+
+<span class="c1"># put in a Pyleoclim.Series object</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=-</span><span class="n">years</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="n">S5</span><span class="p">,</span><span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;Insolation at 5 $^\circ$S&#39;</span><span class="p">,</span><span class="n">value_unit</span><span class="o">=</span><span class="s1">&#39;$W/m^</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                   <span class="n">time_name</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="n">time_unit</span><span class="o">=</span><span class="s1">&#39;ky BP&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Insolation&#39;</span><span class="p">)</span>
+
+<span class="n">sol</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time axis values sorted in ascending order
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Age [ky BP]&#39;, ylabel=&#39;Insolation at 5 $^\\circ$S [$W/m^{2}$]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/139f3e4de506173745c98d7e2fdfccff2e617610d871691ce9db0b8e3c65f679.png" src="../_images/139f3e4de506173745c98d7e2fdfccff2e617610d871691ce9db0b8e3c65f679.png" />
+</div>
+</div>
+<p>Since the record is evenly-spaced, we can use spectral methods appropriate for evenly-spaced time series such as MTM for spectral analysis and the continous wavelet transform. For the later, we use the method by Torrence and Compo (1998):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_sol</span><span class="o">=</span><span class="n">sol</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;mtm&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [00:46&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_sol</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [ky]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/4da6cdd328a8c3a2d58a280260782e8d010711aa96ce6b9cca24b8afd5043145.png" src="../_images/4da6cdd328a8c3a2d58a280260782e8d010711aa96ce6b9cca24b8afd5043145.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_sol</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">wavelet</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;cwt&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing wavelet analysis on individual series: 100%|█| 1000/1000 [00:48&lt;00:00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_sol</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x800 with 2 Axes&gt;,
+ &lt;Axes: title={&#39;center&#39;: &#39;Insolation scalogram (CWT) with 95% threshold&#39;}, xlabel=&#39;Age [ky BP]&#39;, ylabel=&#39;Scale [kyrs]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/822416a31283da352d2cc80e02a36e6e4298c36c8d107c386885902f5ca90bfe.png" src="../_images/822416a31283da352d2cc80e02a36e6e4298c36c8d107c386885902f5ca90bfe.png" />
+</div>
+</div>
+<p>Bother spectral and wavelet analysis shows high, significant power in the 23-kyr band, which corresponds to the precessional cycle. Let’s run coherence analysis between the SST record and insolation at 5S:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coh</span> <span class="o">=</span> <span class="n">ts_slice</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">wavelet_coherence</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">standardize</span><span class="p">(),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing wavelet coherence on surrogate pairs: 100%|█| 1000/1000 [2:46:24&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">coh</span><span class="o">.</span><span class="n">dashboard</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;ts1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span> <span class="c1">#offset the lines</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;ts2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span> <span class="c1">#offset the lines</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-6.0, 3.0)
+</pre></div>
+</div>
+<img alt="../_images/a9c492a30ecfea863dbd138086ce1957f57dd2dd9e55b2ce92a05e8b9733e312.png" src="../_images/a9c492a30ecfea863dbd138086ce1957f57dd2dd9e55b2ce92a05e8b9733e312.png" />
+</div>
+</div>
+<p>XWT (cross-wavelet transform) informs about areas where there is high common power between the two series. The analysis reveals high common power in the precession band (~23kyr) but the phase angles are irregular. This is not surprising given the spectral analysis on the age ensembles, which shows large effects of age uncertainty at 20kyr scales (compared to 40-100kyr). Even if there was a regular behavior, the age uncertainty prevents us from capturing it in the analysis.</p>
+<p>WTC (wavelet transform coherence) shows areas of common behavior between the two time series even if there is low power. The analysis reveals coherence in the 23kyr, 40kyr, 100kyr and 400kyr bands, consistent with orbital forcing of climate. The phase angles in the two upper bands are also regular and show and an in-phase behavior in the eccentrivity band (particularly ca 1Ma) and nearly in phase quadrature in the 400kyr band.</p>
+<p>Let’s examine whether insolation at 65N has a greater impact on the SST record.</p>
+<p><strong>Hypothesis 2</strong>: The periodic signals are driven by insolation at 65N.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># insolation values for past 3 Myears at 65N at summer solstice (day 172)</span>
+<span class="n">S65</span> <span class="o">=</span> <span class="n">daily_insolation</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">172</span><span class="p">,</span> <span class="n">orb</span><span class="o">=</span><span class="n">orb</span><span class="p">)</span>
+
+<span class="c1"># put in a Pyleoclim.Series object</span>
+<span class="n">sol65</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=-</span><span class="n">years</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="n">S65</span><span class="p">,</span><span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;Insolation at 65 $^\circ$N&#39;</span><span class="p">,</span><span class="n">value_unit</span><span class="o">=</span><span class="s1">&#39;$W/m^</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                   <span class="n">time_name</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="n">time_unit</span><span class="o">=</span><span class="s1">&#39;ky BP&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Insolation&#39;</span><span class="p">)</span>
+
+<span class="n">sol65</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time axis values sorted in ascending order
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Age [ky BP]&#39;, ylabel=&#39;Insolation at 65 $^\\circ$N [$W/m^{2}$]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/371f75e61d948dcc848e554631e4b894cecc981431d5f176d74238d74c05e2e1.png" src="../_images/371f75e61d948dcc848e554631e4b894cecc981431d5f176d74238d74c05e2e1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_sol65</span><span class="o">=</span><span class="n">sol65</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;mtm&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">qs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.90</span><span class="p">,</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.99</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing spectral analysis on individual series: 100%|█| 1000/1000 [00:45&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd_sol65</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel=&#39;Period [ky]&#39;, ylabel=&#39;PSD&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/9cad83f01b2f0981554acc507daace4070fb26643246f2f937aa72128da3c7b5.png" src="../_images/9cad83f01b2f0981554acc507daace4070fb26643246f2f937aa72128da3c7b5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_sol65</span> <span class="o">=</span> <span class="n">sol65</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">wavelet</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;cwt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing wavelet analysis on individual series: 100%|█| 1000/1000 [00:48&lt;00:00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scal_sol65</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 1000x800 with 2 Axes&gt;,
+ &lt;Axes: title={&#39;center&#39;: &#39;Insolation scalogram (CWT) with 95% threshold&#39;}, xlabel=&#39;Age [ky BP]&#39;, ylabel=&#39;Scale [kyrs]&#39;&gt;)
+</pre></div>
+</div>
+<img alt="../_images/7875047b42721570eca8b3b0a84a3b432fbaf27b4943b6b3c1afcdbf41ac5d2e.png" src="../_images/7875047b42721570eca8b3b0a84a3b432fbaf27b4943b6b3c1afcdbf41ac5d2e.png" />
+</div>
+</div>
+<p>Spectral and wavelet analysis also shows high, significant power in the precession band. Unlike insolation at 5S, there is stronger power in the obliquity band.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coh65</span> <span class="o">=</span> <span class="n">ts_slice</span><span class="o">.</span><span class="n">detrend</span><span class="p">()</span><span class="o">.</span><span class="n">standardize</span><span class="p">()</span><span class="o">.</span><span class="n">wavelet_coherence</span><span class="p">(</span><span class="n">sol65</span><span class="o">.</span><span class="n">standardize</span><span class="p">(),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;wwz&#39;</span><span class="p">,</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;standardize&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span><span class="o">.</span><span class="n">signif_test</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing wavelet coherence on surrogate pairs: 100%|█| 1000/1000 [3:01:55&lt;00:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">coh65</span><span class="o">.</span><span class="n">dashboard</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;ts1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span> <span class="c1">#offset the lines</span>
+<span class="n">ax</span><span class="p">[</span><span class="s1">&#39;ts2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span> <span class="c1">#offset the lines</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-6.0, 3.0)
+</pre></div>
+</div>
+<img alt="../_images/2505cd68a72912a10ada2b19129a83a1cc4c1df4294189082381b5d563eef267.png" src="../_images/2505cd68a72912a10ada2b19129a83a1cc4c1df4294189082381b5d563eef267.png" />
+</div>
+</div>
+<p>The XWT analysis reveals high common power in the precession band (~23kyr) and interminently in the obliquity band (~40kyr) but the phase angles are irregular, which we again interpret as a consequence of age uncertainty</p>
+<p>The WTC analysis reveals coherence in the 40kyr, 100kyr and 400kyr bands, consistent with orbital forcing of climate. The phase angles in the two upper bands are also regular. Interestingly, it shows an anti-phased behavior in the 100kyr band. This should not be interpreted as a 50kyr lag of sea surface response to the forcing since the eccentricity signal in insolation (the forcing) is not significant.</p>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>In this notebook, we demonstrate the use of the Pyleoclim package for spectral and wavelet analysis using a deep sea record from the Eastern Equatorial Pacific. We first confirmed the strong relationship between the benthic <span class="math notranslate nohighlight">\(\delta^{18}O\)</span> record and orbital cycle, which is note surprising since the age model for this record was obtained through alignment to the orbitally-tuned LR04 stack.</p>
+<p>The independently obtained SST record also exhbitis significant (despite age uncertainty) power in the orbital band. It is interesting to note that the peaks are not well defined around the precession and obliquity cycles, but rather the periodogram shows several peaks within the 20-40kyr band in addition to the 100-kyr eccentricity cycle.</p>
+<p>Cross-wavelet analysis shows high power in the precession band but age model uncertainties preclude any meaningful interpretation of the relative phasing.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<p>Khider, D., Ahn, S., Lisiecki, L. E., Lawrence, C. E., &amp; Kienast, M. (2017). The Role of Uncertainty in Estimating Lead/Lag Relationships in Marine Sedimentary Archives: A Case Study From the Tropical Pacific. Paleoceanography, 32(11), 1275-1290.</p>
+<p>Lawrence, K. T., Liu, Z. H., &amp; Herbert, T. D. (2006). Evolution of the eastern tropical Pacific through Plio-Pleistocne glaciation. Science, 312(5770), 79-83.</p>
+<p>Lin, L., Khider, D., Lisiecki, L. E., &amp; Lawrence, C. E. (2014). Probabilistic sequence alignment of stratigraphic records. Paleoceanography, 29(976-989), 976-989.</p>
+<p>Lisiecki, L. E., &amp; Raymo, M. E. (2005). A Pliocene-Pleistocene stack of 57 globally distributed benthic δ18O records. Paleoceanography, 20(PA1003).</p>
+<p>Lomb, N. R. (1976). Least-squares frequency analysis of unequally spaced data. Astrophysics and Space Science 39, 447-462.</p>
+<p>McKay, N. P., &amp; Emile-Geay, J. (2016). Technical Note: The Linked Paleo Data framework – a common tongue for paleoclimatology. Climate of the Past, 12, 1093-1100.</p>
+<p>Mix, A. C., Le, J., &amp; Shackleton, N. J. (1995). Benthic foraminiferal stable isotope stratigraphy from Site 846: 0-1.8Ma. Proc. Ocean Drill. Program Sci. Results, 138, 839-847.</p>
+<p>Müller, P. J., Kirst, G., Ruhland, G., von Storch, I., &amp; Rosell-Melé, A. (1998). Calibration of the alkenone paleotemperature index Uk’37 based on core-tops from the eastern South Atlantic and the global ocean (60°N-60°S). Geochimica et cosmochimica acta, 62, 1757-1772.</p>
+<p>Paillard, D. (2001). Glacial Cycles: Toward a new paradigm. Reviews of Geophysics, 39(3), 325-346.</p>
+<p>Scargle, J. D. (1982). Studies in astronomical time series analysis. II. Statistical aspects of spectral analyis of unvenly spaced data. The Astrophysical Journal, 263(2), 835-853.</p>
+<p>Scargle, J. D. (1989). Studies in astronomical time series analysis. III. Fourier transforms, aotocorrelation functions, and cross-correlation functions of unevenly-spaced data. . The Astrophysical Journal, 343(2), 874-887.</p>
+<p>Shackleton, N. J., Hall, M. A., &amp; Pate, D. (1995). Pliocene stable isotope stratigraphy of ODP Site 846. Proc. Ocean Drill. Program Sci. Results, 138, 337-356.</p>
+<p>Schulz, M., &amp; Mudelsee, M. (2002). REDFIT: estimating red-noise spectra directly from unevenly spaced paleoclimatic time series. Computers and Geosciences, 28, 421-426.</p>
+<p>Schulz, M., &amp; Stattegger, K. (1997). SPECTRUM: spectral analysis of unevenly spaced time series. Computers and Geosciences, 23(9), 929-945.</p>
+<p>Torrence, C., &amp; Compo, G. P. (1998). A practical guide to wavelet analysis. Bulletin of the American Meteorological Society, 79, 61-78.</p>
+<p>Welch, P. D. (1967). The use of Fast Fourier transform for the estimation of power spectra: A methid based on time averaging over short, modified periodograms. IEEE Transactions on Auio and Electroacoustics, 15(2), 70-73.</p>
+<p>Wu, Z., Huang, N. E., Long, S. R., &amp; Peng, C. K. (2007). On the trend, detrending, and variability of nonlinear and nonstationary time series. Proceeding of the National Academy of Sciences, 104, 14889–14894.</p>
+<p>Zhu, F., Emile-Geay, J., McKay, N. P., Hakim, G. J., Khider, D., Ault, T. R., et al. (2019). Climate models can correctly simulate the continuum of global-average temperature variability. Proc Natl Acad Sci U S A, 116(8), 8728-8733.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./OrbitalCycles"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../README.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Reproducible workflows using the Pyleoclim package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../MDConfrontation/Model_data_confrontation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Model-Data Confrontation in the Spectral Domain</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-exploration">Data Exploration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectral-and-wavelet-analysis">Spectral and Wavelet Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#benthic-record">Benthic record</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Data exploration</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-benthic-lr04-stack">Comparison with Benthic LR04 stack</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#planktonic-record">Planktonic record</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Data exploration</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-age-uncertainty"><a name="age"> Effect of Age Uncertainty </a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-to-insolation">Relationship to Insolation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Deborah Khider
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

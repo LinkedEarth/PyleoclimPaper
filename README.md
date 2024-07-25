@@ -8,7 +8,7 @@
 We present three reproducible workflows as Jupyter Notebook using the [Pyleoclim software package](https://pyleoclim-util.readthedocs.io/en/master/) to serve as fully executable companions to the Pyleoclim [manuscript](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022PA004509). The paper was published in 2022. Since then, we have made improvements to the code base and have created a special package for the handling of [LiPD files](https://lipd.net), [`pylipd`](https://pylipd.readthedocs.io/en/latest/), which works smoothly with `Pyleoclim`. The latest release of these notebooks represent these changes. If you wish to see the notebooks that were originally published with the manuscript and the 0.9.4 version of `Pyleoclim`, see [this tag](https://github.com/LinkedEarth/PyleoclimPaper/tree/v0.4).
 
 We used `Pyleoclim` for the following studies:
-* Orbital Cycles contains a workflow describing spectral and wavelet analysis of a marine record convering the past 5 million years/
+* Orbital Cycles contains a workflow describing spectral and wavelet analysis of a marine record convering the past 5 million years.
 * MD Confrontation contains a notebook reproducing the study by [Zhu et al. (2019)](https://www.pnas.org/doi/abs/10.1073/pnas.1809959116) looking at how well climate models capture the continnum of global-average temperature variability. 
 * CrystalCorrelations contains a notebook looking at the pitfall of correlations for paleoclimate study following the study by [Hu et al. (2017)](https://www.sciencedirect.com/science/article/abs/pii/S0012821X16306823). 
 

@@ -1,0 +1,11 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: README
+parts:
+  - caption: Scientific Workflows
+    chapters:
+    - file: OrbitalCycles/Chasing_orbital_cyclicities.ipynb
+    - file: MDConfrontation/Model_data_confrontation.ipynb
+    - file: CrystalCorrelations/CrystalCorrelations.ipynb
