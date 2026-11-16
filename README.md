@@ -22,9 +22,11 @@ The package can (but do not necessarily have to) directly work with data in the 
 
 ## Requirements
 
-v1.0 of the notebooks require v1.1.0 of Pyleoclim and associated requirements detailed in the `environment.yml` file. A built container is available on [Quay.io](https://quay.io/repository/linkedearth/pyleoclim?tab=tags):
+v1.0 of the notebooks require v1.1.0 of Pyleoclim and associated requirements detailed in the `environment.yml` file. A container with the exact environment (versions pinned to July 2024, when the notebooks were last updated) is available on [Quay.io](https://quay.io/repository/linkedearth/pyleoclimpaper?tab=tags):
 
-`docker pull quay.io/linkedearth/pyleoclim:db17c5968506`
+`docker pull quay.io/linkedearth/pyleoclimpaper:v1.0.0`
+
+MyBinder uses this container (see `.binder/Dockerfile`). The files used to build it, including the full list of installed package versions, are in the `docker` folder.
 
 ## License
 
